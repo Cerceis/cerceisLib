@@ -1,4 +1,4 @@
-# Cerceis Library for my own private use U+1F4DA;
+# Cerceis Library for my own private use &#x1F4DA;
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
 * &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
