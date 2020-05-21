@@ -26,7 +26,7 @@
         * N = Number, S = String
         * Example
             ```
-            console.log(generateRandom("Format",0,NN-SS:NNNN))
+            console.log( generateRandom("Format", 0, NN-SS:NNNN) )
             :=> "52-Dv:7895"
             ```
 * &#x1F4D8;removeArrayDuplicates(arr1, arr2) ***v0.0.2***
