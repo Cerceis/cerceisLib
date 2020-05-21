@@ -1,7 +1,7 @@
 # Cerceis Library for my own private use
 
 ## CoreFunctions
-* generateRandom(type,length,format)
+* generateRandom(type,length,format) ***v.0.0.3***
     * type(String)
         * "Number"        : Generate random Number
         * "String"        : Generate random String
