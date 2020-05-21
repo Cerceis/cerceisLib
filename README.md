@@ -2,7 +2,6 @@
 
 ## ChangeLog
 #### Version 0.0.3
-asdasdasd
     * 2020 May 21
     * Addded generateRandom(type,length,format)
         * type<String> 
