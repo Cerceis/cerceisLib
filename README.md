@@ -1,6 +1,12 @@
 # Cerceis Library for my own private use
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
+* getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+    * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
+    * inputString(String)
+    * strA(String)          : Starting char or string
+    * strB(String)          : Ending char or string
+    * indexOfResult(Number) : Define which result to return (Start from 1)
 * checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
@@ -40,6 +46,9 @@
     * returns String
 
 ## ChangeLog
+#### Version 0.0.4
+* 2020/05/21
+* Added getBetween2Char()
 #### Version 0.0.3
 * 2020/05/21
 * Added generateRandom()

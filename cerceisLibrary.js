@@ -1,6 +1,6 @@
 /* 
 ┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┒
-                            Version 0.0.3s
+                            Version 0.0.4
 ┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┚
 */
 
@@ -97,8 +97,11 @@ const coreLib = {
             return false; 
         }
     },
-    TodoList(){
-        
+    getBetween2Char(inputString, strA, strB, indexOfResult){  
+        if(indexOfResult === 0) return "Please enter Integer > 0"
+        let splitString = inputString.split(strA)[indexOfResult]
+        if(!splitString) return "Please enter integer <= "+ ((inputString.split(strA).length)-1)
+        return splitString.substring(0,splitString.indexOf(strB))
     }
 }
 /*
