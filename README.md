@@ -1,9 +1,10 @@
 # Cerceis's Book Of Magic &#x1F4DA;
 ### The place you might find the spell you want.
+* getBetween2Char [here](#anchors-in-markdown)
 # セルセイスの魔導書 &#x1F4DA;
 ### 欲しかった呪文が見つかるかもしれません。
 ## coreLib : ***import {cerceisLib} from '(path)'***
-* &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+* [create an anchor](#anchors-in-markdown)&#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
     * strA(String)          : Starting char or string
