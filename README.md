@@ -2,5 +2,5 @@
 
 ## ChangeLog
 ### Version 0.0.1
-    * Added core functions
-    * Added namespace exports
+    - Added core functions
+    -Added namespace exports
