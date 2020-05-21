@@ -1,7 +1,7 @@
 # Cerceis Library for my own private use
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
-* `#1589F0`getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+* &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
     * strA(String)          : Starting char or string
