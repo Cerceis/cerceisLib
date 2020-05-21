@@ -1,3 +1,6 @@
+    * 2020 May 21
+    * Added core functions
+
 # Cerceis Library for my own private use
 
 ## ChangeLog
@@ -9,5 +12,4 @@
     * 2020 May 21
     * Added namespace exports
 #### Version 0.0.1
-    * 2020 May 21
-    * Added core functions
+
