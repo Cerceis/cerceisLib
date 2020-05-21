@@ -26,7 +26,7 @@ console.log(cerceisLib.invokeMagic())
 * @7 Stringの中で指定した二つの点の間の内容だけ抽出
 * @8 Objectの配列・Objectから特定のプロパティを抽出
 ## coreLib : ***import {cerceisLib} from '(path)'***
-* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName)***v.0.0.5***
+* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.0.5***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
     * targetFieldName(String)
