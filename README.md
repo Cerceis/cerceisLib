@@ -1,17 +1,17 @@
 # Cerceis Library for my own private use
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
-* getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+* `#1589F0`getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
     * strA(String)          : Starting char or string
     * strB(String)          : Ending char or string
     * indexOfResult(Number) : Define which result to return (Start from 1)
-* checkAlphanumeric(inputText) ***v0.0.3***
+* `#1589F0`checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
     * returns Boolean
-* generateRandom(type,length,format) ***v.0.0.3***
+* `#1589F0`generateRandom(type,length,format) ***v.0.0.3***
     * Generate Random String
     * type(String)
         * "Number"        : Generate random Number
@@ -29,18 +29,18 @@
             console.log(generateRandom("Format",0,NN-SS:NNNN))
             :=> "52-Dv:7895"
             ```
-* removeArrayDuplicates(arr1, arr2) ***v0.0.2***
+* `#1589F0`removeArrayDuplicates(arr1, arr2) ***v0.0.2***
     * Remove duplicated elements and return array consist of only unique element
     * arr1(Array),arr2(Array)
     * returns Array
-* generateMongoObjectId() ***v0.0.1***
+* `#1589F0`generateMongoObjectId() ***v0.0.1***
     * Generate ObjectID
     * returns ObjectId
-* shuffleArray(array) ***v0.0.1***
+* `#1589F0`shuffleArray(array) ***v0.0.1***
     * Shuffle all element in an array
     * array(Array)
     * returns Array
-* stripHTML(stringHtml) ***v0.0.1***
+* `#1589F0`stripHTML(stringHtml) ***v0.0.1***
     * Strip all html tags from String
     * stringHtml(String)
     * returns String
