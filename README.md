@@ -15,7 +15,8 @@
         * N = Number, S = String
         * Example
             ```
-            "NN-SS:NNNN"
+            console.log(generateRandom("Format",0,NN-SS:NNNN))
+            :=> "52-Dv:7895"
             ```
 ## ChangeLog
 #### Version 0.0.3
