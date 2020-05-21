@@ -14,7 +14,9 @@
         * Define Generated format
         * N = Number, S = String
         * Example
+            ```
             "NN-SS:NNNN"
+            ```
 ## ChangeLog
 #### Version 0.0.3
 * 2020/05/21
