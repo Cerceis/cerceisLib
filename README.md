@@ -1,6 +1,6 @@
 # Cerceis Library for my own private use
 
-## CoreFunctions
+## coreLib ***import {cerceisLib} from '<path>'***
 * checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
@@ -38,6 +38,7 @@
     * Strip all html tags from String
     * stringHtml(String)
     * returns String
+
 ## ChangeLog
 #### Version 0.0.3
 * 2020/05/21
