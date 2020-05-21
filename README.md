@@ -1,6 +1,6 @@
 # Cerceis Library for my own private use
 
-## coreLib ***import {cerceisLib} from '<path>'***
+## coreLib ***import {cerceisLib} from '(path)'***
 * checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
