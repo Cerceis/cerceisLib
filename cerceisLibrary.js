@@ -1,10 +1,51 @@
-/* 
-┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┒
-                            Version 0.0.4
-┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┚
-*/
-
 const coreLib = {
+    invokeMagic(){
+        let t = "color:#66FFFF;font-weight:bold;"
+        let r = "color:#FF0033;font-weight:bold;"
+        let p = "color:#FF99CC;font-weight:bold;"
+        let g = "color:#00FF66;font-weight:bold;";
+        let b = "color:#0066FF;font-weight:bold;";
+        const magic = `
+        Version 0.0.5
+        %c███╗   ███╗%c █████╗ %c ██████╗ %c██╗%c ██████╗
+        %c████╗ ████║%c██╔══██╗%c██╔════╝ %c██║%c██╔════╝
+        %c██╔████╔██║%c███████║%c██║  ███╗%c██║%c██║     
+        %c██║╚██╔╝██║%c██╔══██║%c██║   ██║%c██║%c██║     
+        %c██║ ╚═╝ ██║%c██║  ██║%c╚██████╔╝%c██║%c╚██████╗
+        %c╚═╝     ╚═╝%c╚═╝  ╚═╝%c ╚═════╝ %c╚═╝%c ╚═════╝
+        ┎┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┒
+                     Invoke Success
+        ┖┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┚
+        %c        #      %c         #   #    %c        #         
+        %c###############%c  ## ############ %c  ############   
+        %c#    #     #   %c   ##     #       %c       #     #   
+        %c# ###### ######%c    #  ########   %c################ 
+        %c#   ##     ##  %c       #      #   %c       #     #   
+        %c#  # ##   ## # %c ####  ########   %c  ############   
+        %c# #  #  #  #  #%c    #  #      #   %c       #         
+        %c#  ##########  %c    #  ########   %c  ############   
+        %c#  #   #    #  %c    #  #      #   %c       #         
+        %c#  ##########  %c   ##  ########   %c################ 
+        %c#  #   #    #  %c  ## #            %c                 
+        %c#  ##########  %c ##   ########### %c  ############   
+        %c##    #  #  # #%c              #   %c   #          #   
+        %c#    ##  #  ###%c  ################%c  ############   
+        %c#   ##   ##    %c#     #       #   %c #          #   
+        %c###     ###### %c     #    ###     %c############   
+        ┎┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┒
+                            詠唱成功  
+        ┖┈┈┈┈┈┈┈┈┈┈┈┈୨❈୧┈┈┈┈┈┈┈┈┈┈┈┈┈┚                               
+        `;
+        return console.log(magic, t,r,p,g,b,
+                                  t,r,p,g,b,
+                                  t,r,p,g,b,
+                                  t,r,p,g,b,
+                                  t,r,p,g,b,
+                                  t,r,p,g,b,
+                                  r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g
+                                  ,r,p,g,r,p,g,r,p,g
+                                  );
+    },
     //#1 (String)
     stripHTML(stringHtml){
         let temElement = document.createElement("div");
@@ -82,10 +123,10 @@ const coreLib = {
                     }
                     return result;
                 }else{
-                    return "Please enter a format (type,length,format)"
+                    return console.log("Please enter a format (type,length,format)")
                 }
             default:
-                return 'Please enter either "Number" or "String" or "Number+String" or "Format"'
+                return console.log('Please enter either "Number" or "String" or "Number+String" or "Format"')
         }
     },
     //#6 (String)
@@ -102,9 +143,39 @@ const coreLib = {
         let splitString = inputString.split(strA)[indexOfResult]
         if(!splitString) return "Please enter integer <= "+ ((inputString.split(strA).length)-1)
         return splitString.substring(0,splitString.indexOf(strB))
+    },
+    extractFieldFromObject(inputObjectOrArray,targetFieldName){
+        if(targetFieldName !== undefined && targetFieldName !== null){
+            if(Object.prototype.toString.call(inputObjectOrArray) === "[object Object]"){
+                let result = {};
+                return result[targetFieldName] = inputObjectOrArray[targetFieldName];
+            }else if(Object.prototype.toString.call(inputObjectOrArray) === "[object Array]"){
+                let result = [];
+                for(let i in inputObjectOrArray)
+                    result.push(inputObjectOrArray[i][targetFieldName]);
+                return result;
+            }
+           
+        }else
+        return console.log("extractFieldFromObject:Please enter target field name")
     }
 }
 /*
+                const resultList = {
+                    input: unpurifiedList,
+                    remove(target) {
+                        this.input = purify(this.input,target);
+                        return this;
+                    },
+                    extract(){
+                        this.input = extractID(this.input);
+                        return this;
+                    },
+                    convert(){
+                        this.input.map(function(myId) { return mongodb.ObjectId(myId);})
+                        return this;
+                    }
+                 }
 class Todos {
     constructor() {
         this.todos = [];

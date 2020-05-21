@@ -2,6 +2,20 @@
 ### The place you might find the spell you want.
 # セルセイスの魔導書 &#x1F4DA;
 ### 欲しかった呪文が見つかるかもしれません。
+## 使い方・How to use
+### 普通のHTML・Normal HTML script tag:
+```
+<script type="module">
+    import { cerceisLib } from "<path>/cerceisLibrary.js";
+    console.log(cerceisLib.invokeMagic())
+</script>
+```
+### Vue/React/Angular/etc:
+```
+import { cerceisLib } from "<path>/cerceisLibrary.js";
+console.log(cerceisLib.invokeMagic())
+```
+## 呪文一覧
 #### @+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
 * @1 StringのHTMLのタッグを全部外す
 * @2 配列の要素を全部ランダムに並び替える
@@ -10,7 +24,12 @@
 * @5 ランダムなIDを生成する（長さ・フォマット指定できる）
 * @6 StringがA-z,0-9だけ含んでいるかどうか
 * @7 Stringの中で指定した二つの点の間の内容だけ抽出
+* @8 Objectの配列・Objectから特定のプロパティを抽出
 ## coreLib : ***import {cerceisLib} from '(path)'***
+* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName)***v.0.0.5***
+    * Extract specified property value from object or arrays of object
+    * inputObjectOrArray(Object)/(Array)
+    * targetFieldName(String)
 * @7 &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
@@ -54,8 +73,14 @@
     * Strip all html tags from String
     * stringHtml(String)
     * returns String
+* @0 &#x1F4D8;invokeMagic()
+    * To test its working
+    * ちゃんと動いていることを確認する
 
 ## ChangeLog
+#### Version 0.0.5
+* 2020/05/21
+* Added extractFieldFromObject()
 #### Version 0.0.4
 * 2020/05/21
 * Added getBetween2Char()
