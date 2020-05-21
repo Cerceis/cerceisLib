@@ -11,8 +11,10 @@
         * Define the length of the result 
         * Ignored in type "Format"
     * format(String)
-        * Define Generated format ex.("NN-SS:NNNN")
+        * Define Generated format
         * N = Number, S = String
+        * Example
+            "NN-SS:NNNN"
 ## ChangeLog
 #### Version 0.0.3
 * 2020/05/21
