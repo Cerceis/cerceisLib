@@ -196,52 +196,5 @@ const coreLib = {
         console.log('%cType Error : extractFieldFromObject(<Array/Object>,<String>)','color:#00FF66;')
     }
 }
-/*
-                const resultList = {
-                    input: unpurifiedList,
-                    remove(target) {
-                        this.input = purify(this.input,target);
-                        return this;
-                    },
-                    extract(){
-                        this.input = extractID(this.input);
-                        return this;
-                    },
-                    convert(){
-                        this.input.map(function(myId) { return mongodb.ObjectId(myId);})
-                        return this;
-                    }
-                 }
-class Todos {
-    constructor() {
-        this.todos = [];
-    }
-    list() {
-        return [...this.todos];
-    }
-    add(title) {
-        let todo = {
-            title: title,
-            completed: false,
-        }
 
-        this.todos.push(todo);
-    }
-    complete(title) {
-        let todoFound = false;
-        this.todos.forEach((todo) => {
-            if (todo.title === title) {
-                todo.completed = true;
-                todoFound = true;
-                return;
-            }
-        });
-        if (!todoFound) {
-            throw new Error(`No TODO was found with the title: "${title}"`);
-        }
-    }
-}
-
-export {Todos};
-*/
 export const cerceisLib = coreLib;
