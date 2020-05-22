@@ -35,7 +35,7 @@ console.log(cerceisLib.invokeMagic())
     * inputString(String)
     * strA(String)          : Starting char or string
     * strB(String)          : Ending char or string
-    * indexOfResult(Number) : Define which result to return (Start from 1)
+    * indexOfResult(Number)*Optional' : Define which result to return (Start from 1)
 * @6 &#x1F4D8;checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)

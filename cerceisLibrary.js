@@ -77,65 +77,78 @@ const coreLib = {
     },
     //#4 (Array,Array)
     removeArrayDuplicates(arr1, arr2) {
-        return [...new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e))))];
+        return Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
     },
     //#5 (String,Number,String)
     generateRandom(type,length,format) {
+        if(
+            Object.prototype.toString.call(type) === "[object String]" &&
+            Object.prototype.toString.call(length) === "[object Number]" &&
+            (Object.prototype.toString.call(format) === "[object String]" || Object.prototype.toString.call(format) === "[object Undefined]" )
+        ){
         let result = '';
         let chars = '';
         let charLen = 0;
-        switch(type){
-            case "Number+String":
-                chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-                charLen = chars.length;
-                for ( let  i = 0; i < length; i++ ) {
-                    result += chars.charAt(Math.floor(Math.random() * charLen));
-                }
-                return result;    
-            case "Number":
-                chars       = '0123456789';
-                charLen = chars.length;
-                for ( let  i = 0; i < length; i++ ) {
-                    result += chars.charAt(Math.floor(Math.random() * charLen));
-                }
-                return result;
-            case "String":
-                chars       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                charLen = chars.length;
-                for ( let  i = 0; i < length; i++ ) {
-                   result += chars.charAt(Math.floor(Math.random() * charLen));
-                }
-                return result;
-            case "Format":
-                if(format){
-                    let StringChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                    let StringCharsLen = StringChars.length;
-                    let NumChars = '0123456789';
-                    let NumCharsLen = NumChars.length;
-                    for(let i in format){
-                        if(!this.checkAlphanumeric(format[i])){
-                            result += format[i];
-                        }else if(format[i]==="N"){
-                            result += NumChars.charAt(Math.floor(Math.random() * NumCharsLen));
-                        }else if(format[i]==="S"){
-                            result += StringChars.charAt(Math.floor(Math.random() * StringCharsLen));
-                        }
+            switch(type){
+                case "Number+String":
+                    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+                    charLen = chars.length;
+                    for ( let  i = 0; i < length; i++ ) {
+                        result += chars.charAt(Math.floor(Math.random() * charLen));
+                    }
+                    return result;    
+                case "Number":
+                    chars       = '0123456789';
+                    charLen = chars.length;
+                    for ( let  i = 0; i < length; i++ ) {
+                        result += chars.charAt(Math.floor(Math.random() * charLen));
                     }
                     return result;
-                }else{
-                    return console.log("Please enter a format (type,length,format)")
-                }
-            default:
-                return console.log('Please enter either "Number" or "String" or "Number+String" or "Format"')
+                case "String":
+                    chars       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                    charLen = chars.length;
+                    for ( let  i = 0; i < length; i++ ) {
+                    result += chars.charAt(Math.floor(Math.random() * charLen));
+                    }
+                    return result;
+                case "Format":
+                    if(format){
+                        let StringChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                        let StringCharsLen = StringChars.length;
+                        let NumChars = '0123456789';
+                        let NumCharsLen = NumChars.length;
+                        for(let i = 0 ;i<format.length; i++){
+                            if(!this.checkAlphanumeric(format[i])){
+                                result += format[i];
+                            }else if(format[i]==="N"){
+                                result += NumChars.charAt(Math.floor(Math.random() * NumCharsLen));
+                            }else if(format[i]==="S"){
+                                result += StringChars.charAt(Math.floor(Math.random() * StringCharsLen));
+                            }
+                        }
+                        return result;
+                    }else{
+                        console.log("%cPlease enter a format (type,length,format)","color:#00FF66;")
+                        break;
+                    }
+                default:
+                    console.log('%cPlease enter either "Number" or "String" or "Number+String" or "Format"',"color:#00FF66;")
+            }
+        }else{
+            console.log("%cType Error : generateRandom(<String>,<Number>,<String>)","color:#00FF66;")
         }
     },
     //#6 (String)
     checkAlphanumeric(inputText){
-        let alphanumeric = /^[0-9a-zA-Z]+$/;
-        if(inputText.match(alphanumeric)){
-            return true;
-        }else{ 
-            return false; 
+        if(Object.prototype.toString.call(inputText) === "[object String]"){
+            let alphanumeric = /^[0-9a-zA-Z]+$/;
+            if(inputText.match(alphanumeric)){
+                return true;
+            }else{ 
+                return false; 
+            }
+        }else{
+            console.log("%cType Error : checkAlphanumeric(<String>)","color:#00FF66;")
         }
     },
     getBetween2Char(inputString, strA, strB, indexOfResult){  
@@ -155,9 +168,8 @@ const coreLib = {
                     result.push(inputObjectOrArray[i][targetFieldName]);
                 return result;
             }
-           
         }else
-        return console.log("extractFieldFromObject:Please enter target field name")
+        console.log("Please enter target field name")
     }
 }
 /*
