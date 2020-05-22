@@ -43,45 +43,58 @@ const coreLib = {
                                   t,r,p,g,b,
                                   t,r,p,g,b,
                                   t,r,p,g,b,
-                                  p,
+                                  t,
                                   r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g,r,p,g
                                   ,r,p,g,r,p,g,r,p,g
                                   );
     },
-    //#1 (String)
     stripHTML(stringHtml){
-        let temElement = document.createElement("div");
-        temElement.innerHTML = stringHtml
-
-        return temElement.textContent || temElement.innerText || "";
-    },
-    //#2 (Array)
-    shuffleArray(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+        if(
+            Object.prototype.toString.call(stringHtml) === "[object String]" 
+        ){
+            let temElement = document.createElement("div");
+            temElement.innerHTML = stringHtml
+            return temElement.textContent || temElement.innerText || "";
+        }else{
+            console.log('%cType Error : stripHTML(<String>)','color:#00FF66;')
         }
-        return array;
     },
-    //#3 ()
+    shuffleArray(array){
+        if(
+            Object.prototype.toString.call(array) === "[object Array]" 
+        ){
+            let currentIndex = array.length, temporaryValue, randomIndex;
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            return array;
+        }else{
+            console.log('%cType Error : shuffleArray(<Array>)','color:#00FF66;')
+        }
+    },
     generateMongoObjectId(){
         var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
         return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
             return (Math.random() * 16 | 0).toString(16);
         }).toLowerCase();
     },
-    //#4 (Array,Array)
-    removeArrayDuplicates(arr1, arr2) {
-        return Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
+    removeDuplicatesFromArray(arr1,arr2){
+        if(
+            Object.prototype.toString.call(arr1) === "[object Array]" &&
+            Object.prototype.toString.call(arr2) === "[object Array]" 
+        ){
+            return Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
+        }else{
+            console.log('%cType Error : removeDuplicatesFromArray(<Array>,<Array>)','color:#00FF66;')
+        }
     },
-    //#5 (String,Number,String)
     generateRandom(type,length,format) {
         if(
             Object.prototype.toString.call(type) === "[object String]" &&
@@ -153,14 +166,23 @@ const coreLib = {
             console.log("%cType Error : checkAlphanumeric(<String>)","color:#00FF66;")
         }
     },
-    getBetween2Char(inputString, strA, strB, indexOfResult){  
-        if(indexOfResult === 0) return "Please enter Integer > 0"
-        let splitString = inputString.split(strA)[indexOfResult]
-        if(!splitString) return "Please enter integer <= "+ ((inputString.split(strA).length)-1)
-        return splitString.substring(0,splitString.indexOf(strB))
+    getBetween2Char(inputString,strA,strB,indexOfResult){
+        if(
+            Object.prototype.toString.call(inputString) === "[object String]" &&
+            Object.prototype.toString.call(strA) === "[object String]" &&
+            Object.prototype.toString.call(strB) === "[object String]" &&
+            (Object.prototype.toString.call(indexOfResult) === "[object Number]")
+        ){
+            if(indexOfResult === 0) return "Please enter Integer > 0"
+            let splitString = inputString.split(strA)[indexOfResult]
+            if(!splitString) return "Please enter integer <= "+ ((inputString.split(strA).length)-1)
+            return splitString.substring(0,splitString.indexOf(strB))
+        }else{
+            console.log('%cType Error : getBetween2Char(<String>,<String>,<String>,<Number>)','color:#00FF66;')
+        }
     },
     extractFieldFromObject(inputObjectOrArray,targetFieldName){
-        if(targetFieldName !== undefined && targetFieldName !== null){
+        if(Object.prototype.toString.call(targetFieldName) === "[object String]"){
             if(Object.prototype.toString.call(inputObjectOrArray) === "[object Object]"){
                 let result = {};
                 return result[targetFieldName] = inputObjectOrArray[targetFieldName];
@@ -171,7 +193,7 @@ const coreLib = {
                 return result;
             }
         }else
-        console.log("Please enter target field name")
+        console.log('%cType Error : extractFieldFromObject(<Array/Object>,<String>)','color:#00FF66;')
     }
 }
 /*

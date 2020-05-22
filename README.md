@@ -7,13 +7,13 @@
 ```
 <script type="module">
     import { cerceisLib } from "<path>/cerceisLibrary.js";
-    console.log(cerceisLib.invokeMagic())
+    cerceisLib.invokeMagic()
 </script>
 ```
 ### Vue/React/Angular/etc:
 ```
 import { cerceisLib } from "<path>/cerceisLibrary.js";
-console.log(cerceisLib.invokeMagic())
+cerceisLib.invokeMagic()
 ```
 ## 呪文一覧
 #### @+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
@@ -58,7 +58,7 @@ console.log(cerceisLib.invokeMagic())
             console.log( generateRandom("Format", 0, NN-SS:NNNN) )
             :=> "52-Dv:7895"
             ```
-* @4 &#x1F4D8;removeArrayDuplicates(arr1, arr2) ***v0.0.2***
+* @4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2) ***v0.0.2***
     * Remove duplicated elements and return array consist of only unique element
     * arr1(Array),arr2(Array)
     * returns Array
