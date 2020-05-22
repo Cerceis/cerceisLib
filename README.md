@@ -15,16 +15,23 @@
 import { cerceisLib } from "<path>/cerceisLibrary.js";
 cerceisLib.invokeMagic()
 ```
+
 ## 呪文一覧
 #### @+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
-* @1 StringのHTMLのタッグを全部外す
-* @2 配列の要素を全部ランダムに並び替える
-* @3 MongoDB用のObjectIdを生成する
-* @4 二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
-* @5 ランダムなIDを生成する（長さ・フォマット指定できる）
-* @6 StringがA-z,0-9だけ含んでいるかどうか
-* @7 Stringの中で指定した二つの点の間の内容だけ抽出
-* @8 Objectの配列・Objectから特定のプロパティを抽出
+* String関連
+    * @1 StringのHTMLのタッグを全部外す
+    * @6 StringがA-z,0-9だけ含んでいるかどうか
+    * @7 Stringの中で指定した二つの点の間の内容だけ抽出
+* Arary関連
+    * @2 配列の要素を全部ランダムに並び替える
+    * @4 二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
+    * @8 Objectの配列・Objectから特定のプロパティを抽出
+* 生成関連
+    * @3 MongoDB用のObjectIdを生成する
+    * @5 ランダムなIDを生成する（長さ・フォマット指定できる）
+* Object関連
+    * @8 Objectの配列・Objectから特定のプロパティを抽出
+
 ## coreLib : ***import {cerceisLib} from '(path)'***
 * @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.0.5***
     * Extract specified property value from object or arrays of object

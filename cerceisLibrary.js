@@ -153,7 +153,6 @@ const coreLib = {
             console.log("%cType Error : generateRandom(<String>,<Number>,<String>)","color:#00FF66;")
         }
     },
-    //#6 (String)
     checkAlphanumeric(inputText){
         if(Object.prototype.toString.call(inputText) === "[object String]"){
             let alphanumeric = /^[0-9a-zA-Z]+$/;
