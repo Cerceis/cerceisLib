@@ -5,17 +5,21 @@
 ## 使い方・How to use
 ### 普通のHTML・Normal HTML script tag:
 ```
-<script type="module">
-    import { cerceisLib } from "<path>/cerceisLibrary.js";
+<script src="pathTo/cerceisLibrary.js"></script>
+<script>
     cerceisLib.invokeMagic()
 </script>
 ```
 ### Vue/React/Angular/etc:
 ```
-import { cerceisLib } from "<path>/cerceisLibrary.js";
+import { cerceisLib } from "cerceisLibrary";
 cerceisLib.invokeMagic()
 ```
-
+### NodeJS
+```
+const cerceisLib = require('cerceisLibrary')
+cerceisLib.invokeMagic()
+```
 ## 呪文一覧
 #### @+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
 * String関連
