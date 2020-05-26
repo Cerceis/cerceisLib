@@ -22,10 +22,11 @@ cerceisLib.invokeMagic()
     * @1 StringのHTMLのタッグを全部外す
     * @6 StringがA-z,0-9だけ含んでいるかどうか
     * @7 Stringの中で指定した二つの点の間の内容だけ抽出
-* Arary関連
+* Array
     * @2 配列の要素を全部ランダムに並び替える
     * @4 二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
     * @8 Objectの配列・Objectから特定のプロパティを抽出
+    * @9 配列の中のユニークな値を抽出
 * 生成関連
     * @3 MongoDB用のObjectIdを生成する
     * @5 ランダムなIDを生成する（長さ・フォマット指定できる）
@@ -33,6 +34,11 @@ cerceisLib.invokeMagic()
     * @8 Objectの配列・Objectから特定のプロパティを抽出
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
+
+* @9 &#x1F4D8;findUniqueInArray(inputArr) ***v.0.1.0***
+    * Return array contain only unique field
+    * inputArr(Array)
+
 * @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.0.5***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
@@ -85,6 +91,10 @@ cerceisLib.invokeMagic()
     * ちゃんと動いていることを確認する
 
 ## ChangeLog
+#### Version 0.1.0
+* 2020/05/26
+* Added findUniqueInArray()
+* Rewrited all functions to have better strict type check and error handling
 #### Version 0.0.5
 * 2020/05/21
 * Added extractFieldFromObject()

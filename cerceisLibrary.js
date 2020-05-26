@@ -1,3 +1,12 @@
+const is = fn => x => x && x.constructor === fn //type check
+//TypeCheck
+const isDefined = x => x !== undefined && x !== null
+const isUndefined = x => x === undefined
+const isArray = Array.isArray
+const isString = x => { return (typeof x === 'string' || x instanceof String)  ? true : false }
+const isObject = x => { return Object.prototype.toString.call(x) === "[object Object]" ? true : false }
+const isNumber = x => { return Object.prototype.toString.call(x) === "[object Number]" ? true : false }
+
 const coreLib = {
     invokeMagic(){
         let t = "color:#66FFFF;font-weight:bold;"
@@ -50,7 +59,7 @@ const coreLib = {
     },
     stripHTML(stringHtml){
         if(
-            Object.prototype.toString.call(stringHtml) === "[object String]" 
+            isString(stringHtml)
         ){
             let temElement = document.createElement("div");
             temElement.innerHTML = stringHtml
@@ -61,7 +70,7 @@ const coreLib = {
     },
     shuffleArray(array){
         if(
-            Object.prototype.toString.call(array) === "[object Array]" 
+            isArray(array)
         ){
             let currentIndex = array.length, temporaryValue, randomIndex;
             // While there remain elements to shuffle...
@@ -87,8 +96,8 @@ const coreLib = {
     },
     removeDuplicatesFromArray(arr1,arr2){
         if(
-            Object.prototype.toString.call(arr1) === "[object Array]" &&
-            Object.prototype.toString.call(arr2) === "[object Array]" 
+            isArray(arr1) &&
+            isArray(arr2)
         ){
             return Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
         }else{
@@ -97,9 +106,9 @@ const coreLib = {
     },
     generateRandom(type,length,format) {
         if(
-            Object.prototype.toString.call(type) === "[object String]" &&
-            Object.prototype.toString.call(length) === "[object Number]" &&
-            (Object.prototype.toString.call(format) === "[object String]" || Object.prototype.toString.call(format) === "[object Undefined]" )
+           isString(type) &&
+           isNumber(length) &&
+           (isString(format) || isUndefined(format) )
         ){
         let result = '';
         let chars = '';
@@ -154,7 +163,7 @@ const coreLib = {
         }
     },
     checkAlphanumeric(inputText){
-        if(Object.prototype.toString.call(inputText) === "[object String]"){
+        if(isString(inputText)){
             let alphanumeric = /^[0-9a-zA-Z]+$/;
             if(inputText.match(alphanumeric)){
                 return true;
@@ -167,10 +176,10 @@ const coreLib = {
     },
     getBetween2Char(inputString,strA,strB,indexOfResult){
         if(
-            Object.prototype.toString.call(inputString) === "[object String]" &&
-            Object.prototype.toString.call(strA) === "[object String]" &&
-            Object.prototype.toString.call(strB) === "[object String]" &&
-            (Object.prototype.toString.call(indexOfResult) === "[object Number]")
+           isString(inputString) &&
+           isString(strA) &&
+           isString(strB) &&
+           (isNumber(indexOfResult) || isUndefined(indexOfResult))
         ){
             if(indexOfResult === 0) return "Please enter Integer > 0"
             let splitString = inputString.split(strA)[indexOfResult]
@@ -181,11 +190,11 @@ const coreLib = {
         }
     },
     extractFieldFromObject(inputObjectOrArray,targetFieldName){
-        if(Object.prototype.toString.call(targetFieldName) === "[object String]"){
-            if(Object.prototype.toString.call(inputObjectOrArray) === "[object Object]"){
+        if(isString(targetFieldName)){
+            if(isObject(inputObjectOrArray)){
                 let result = {};
                 return result[targetFieldName] = inputObjectOrArray[targetFieldName];
-            }else if(Object.prototype.toString.call(inputObjectOrArray) === "[object Array]"){
+            }else if(isArray(inputObjectOrArray)){
                 let result = [];
                 for(let i in inputObjectOrArray)
                     result.push(inputObjectOrArray[i][targetFieldName]);
@@ -193,7 +202,24 @@ const coreLib = {
             }
         }else
         console.log('%cType Error : extractFieldFromObject(<Array/Object>,<String>)','color:#00FF66;')
+    },
+    findUniqueInArray(inputArr){
+        if(
+           isArray(inputArr)
+        ){
+            let uniqueArr = []
+            for(let i in inputArr){
+                if(uniqueArr.includes(inputArr[i])){
+                    uniqueArr.splice(uniqueArr.indexOf(inputArr[i]),1)
+                }else
+                    uniqueArr.push(inputArr[i])
+            }
+            return uniqueArr;
+        }else{
+            console.log('%cType Error : findUniqueInArray(<Array>)','color:#00FF66;')
+        }
     }
 }
 
 export const cerceisLib = coreLib;
+
