@@ -39,10 +39,10 @@ cerceisLib.invokeMagic()
     * Return array contain only unique field
     * inputArr(Array)
 
-* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.0.5***
+* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.1.1***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
-    * targetFieldName(String)
+    * targetFieldName(String)/(Arary)
 * @7 &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
@@ -91,6 +91,9 @@ cerceisLib.invokeMagic()
     * ちゃんと動いていることを確認する
 
 ## ChangeLog
+#### Version 0.1.1
+* 2020/05/26
+* extractFieldFromObject() now supports multiple field extract
 #### Version 0.1.0
 * 2020/05/26
 * Added findUniqueInArray()

@@ -1,11 +1,10 @@
-const is = fn => x => x && x.constructor === fn //type check
 //TypeCheck
-const isDefined = x => x !== undefined && x !== null
-const isUndefined = x => x === undefined
-const isArray = Array.isArray
-const isString = x => { return (typeof x === 'string' || x instanceof String)  ? true : false }
-const isObject = x => { return Object.prototype.toString.call(x) === "[object Object]" ? true : false }
-const isNumber = x => { return Object.prototype.toString.call(x) === "[object Number]" ? true : false }
+const isDefined = x => x !== undefined && x !== null;
+const isUndefined = x => x === undefined;
+const isArray = Array.isArray;
+const isString = x => (typeof x === 'string' || x instanceof String);
+const isObject = x => Object.prototype.toString.call(x) === "[object Object]";
+const isNumber = x => Object.prototype.toString.call(x) === "[object Number]";
 
 const coreLib = {
     invokeMagic(){
@@ -200,8 +199,26 @@ const coreLib = {
                     result.push(inputObjectOrArray[i][targetFieldName]);
                 return result;
             }
+        }else if(isArray(targetFieldName)){
+            if(isObject(inputObjectOrArray)){
+                let result = {};
+                targetFieldName.forEach(element => {
+                    result[element] = inputObjectOrArray[element]
+                });
+                return result;
+            }else if(isArray(inputObjectOrArray)){
+                let result = [];
+                for(let i in inputObjectOrArray){
+                    let tmpObj = {};
+                    targetFieldName.forEach(element => {
+                        tmpObj[element] = inputObjectOrArray[i][element]
+                    });
+                    result.push(tmpObj);
+                }
+                return result;
+            }
         }else
-        console.log('%cType Error : extractFieldFromObject(<Array/Object>,<String>)','color:#00FF66;')
+        console.log('%cType Error : extractFieldFromObject(<Array/Object>,<Array/String>)','color:#00FF66;')
     },
     findUniqueInArray(inputArr){
         if(
