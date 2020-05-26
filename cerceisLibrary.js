@@ -85,7 +85,6 @@ exports.extractFieldFromObject = function(inputObjectOrArray,targetFieldName){
             }
             return result;
         }
-    removeDuplicatesFromArray(arr1,arr2){
     }else
     console.log('%cType Error : extractFieldFromObject(<Array/Object>,<Array/String>)','color:#00FF66;')
 }
