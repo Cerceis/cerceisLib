@@ -14,7 +14,7 @@ exports.invokeMagic = function(){
     let g = "color:#00FF66;font-weight:bold;";
     let b = "color:#0066FF;font-weight:bold;";
     const magic = `
-    Version 0.0.5
+    Cerceis's book of magic 
     %c███╗   ███╗%c █████╗ %c ██████╗ %c██╗%c ██████╗
     %c████╗ ████║%c██╔══██╗%c██╔════╝ %c██║%c██╔════╝
     %c██╔████╔██║%c███████║%c██║  ███╗%c██║%c██║     

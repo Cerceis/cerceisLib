@@ -1,27 +1,48 @@
 # Cerceis's Book Of Magic &#x1F4DA;
 ### The place you might find the spell you want.
+#### This library provides various functions that you might find it useful during development
 # セルセイスの魔導書 &#x1F4DA;
 ### 欲しかった呪文が見つかるかもしれません。
+## INSTALLATION
+```
+npm install cerceislib --save
+```
 ## 使い方・How to use
 ### 普通のHTML・Normal HTML script tag:
 ```
-<script src="pathTo/cerceisLibrary.js"></script>
+<script src="<pathTo>/cerceisLibrary.js"></script>
 <script>
     cerceisLib.invokeMagic()
 </script>
 ```
 ### Vue/React/Angular/etc:
 ```
-import { cerceisLib } from "cerceisLibrary";
+import cerceisLib from "cerceislib";
 cerceisLib.invokeMagic()
 ```
 ### NodeJS
 ```
-const cerceisLib = require('cerceisLibrary')
+const cerceisLib = require('cerceislib')
 cerceisLib.invokeMagic()
 ```
+## List of functions
+#### #+[Number] to search (Windows:ctrl+F, Mac:cmd+F).
+* String related
+    * @1 Strip all html tags from String
+    * @6 Check String if its Alphanumeric (No symbols)
+    * @7 Get substring between 2 characters or string, if multiple result is available, choosing is possible.
+* Array related
+    * @2 Shuffle all element in an array
+    * @4 Remove duplicated elements and return array consist of only unique element
+    * @8 Extract specified property value from object or arrays of object
+    * @9 Return array contains only unique field
+* Generate
+    * @3 Generate ObjectID from timestamp
+    * @5 Generate Random String (Able to define format)
+* Object related
+    * @8 Extract specified property value from object or arrays of object
 ## 呪文一覧
-#### @+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
+#### #+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
 * String関連
     * @1 StringのHTMLのタッグを全部外す
     * @6 StringがA-z,0-9だけ含んでいるかどうか
@@ -39,26 +60,26 @@ cerceisLib.invokeMagic()
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
 
-* @9 &#x1F4D8;findUniqueInArray(inputArr) ***v.0.1.0***
-    * Return array contain only unique field
+* #9 &#x1F4D8;findUniqueInArray(inputArr) ***v.0.1.0***
+    * Return array contains only unique field
     * inputArr(Array)
 
-* @8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.1.1***
+* #8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.1.1***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
     * targetFieldName(String)/(Arary)
-* @7 &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+* #7 &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
     * strA(String)          : Starting char or string
     * strB(String)          : Ending char or string
     * indexOfResult(Number)*Optional' : Define which result to return (Start from 1)
-* @6 &#x1F4D8;checkAlphanumeric(inputText) ***v0.0.3***
+* #6 &#x1F4D8;checkAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
     * returns Boolean
-* @5 &#x1F4D8;generateRandom(type,length,format) ***v.0.0.3***
-    * Generate Random String
+* #5 &#x1F4D8;generateRandom(type,length,format) ***v.0.0.3***
+    * Generate Random String (Able to define format
     * type(String)
         * "Number"        : Generate random Number
         * "String"        : Generate random Alphabet
@@ -75,22 +96,22 @@ cerceisLib.invokeMagic()
             console.log( generateRandom("Format", 0, NN-SS:NNNN) )
             :=> "52-Dv:7895"
             ```
-* @4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2) ***v0.0.2***
+* #4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2) ***v0.0.2***
     * Remove duplicated elements and return array consist of only unique element
     * arr1(Array),arr2(Array)
     * returns Array
-* @3 &#x1F4D8;generateMongoObjectId() ***v0.0.1***
+* #3 &#x1F4D8;generateMongoObjectId() ***v0.0.1***
     * Generate ObjectID from timestamp
     * returns ObjectId
-* @2 &#x1F4D8;shuffleArray(array) ***v0.0.1***
+* #2 &#x1F4D8;shuffleArray(array) ***v0.0.1***
     * Shuffle all element in an array
     * array(Array)
     * returns Array
-* @1 &#x1F4D8;stripHTML(stringHtml) ***v0.0.1***
+* #1 &#x1F4D8;stripHTML(stringHtml) ***v0.0.1***
     * Strip all html tags from String
     * stringHtml(String)
     * returns String
-* @0 &#x1F4D8;invokeMagic()
+* #0 &#x1F4D8;invokeMagic()
     * To test its working
     * ちゃんと動いていることを確認する
 
