@@ -28,42 +28,52 @@ cerceisLib.invokeMagic()
 ## List of functions
 #### #+[Number] to search (Windows:ctrl+F, Mac:cmd+F).
 * String related
-    * @1 Strip all html tags from String
-    * @6 Check String if its Alphanumeric (No symbols)
-    * @7 Get substring between 2 characters or string, if multiple result is available, choosing is possible.
+    * @1    Strip all html tags from String
+    * @6    Check String if its Alphanumeric (No symbols)
+    * @7    Get substring between 2 characters or string, if multiple result is available, choosing is possible.
 * Array related
-    * @2 Shuffle all element in an array
-    * @4 Remove duplicated elements and return array consist of only unique element
-    * @8 Extract specified property value from object or arrays of object
-    * @9 Return array contains only unique field
+    * @2    Shuffle all element in an array
+    * @4    Remove duplicated elements and return array consist of only unique element
+    * @8    Extract specified property value from object or arrays of object
+    * @9    Return array contains only unique field
+    * @10   Get random Element from result (Can specify number of returns)
+    * @11   Sum all array element (Works on String element too)
 * Generate
-    * @3 Generate ObjectID from timestamp
-    * @5 Generate Random String (Able to define format)
+    * @3    Generate ObjectID from timestamp
+    * @5    Generate Random String (Able to define format)
 * Object related
-    * @8 Extract specified property value from object or arrays of object
+    * @8    Extract specified property value from object or arrays of object
 ## 呪文一覧
 #### #+[番号]を(Windows:ctrl+F, Mac:cmd+F)で探す。
 * String関連
-    * @1 StringのHTMLのタッグを全部外す
-    * @6 StringがA-z,0-9だけ含んでいるかどうか
-    * @7 Stringの中で指定した二つの点の間の内容だけ抽出
+    * @1    StringのHTMLのタッグを全部外す
+    * @6    StringがA-z,0-9だけ含んでいるかどうか
+    * @7    Stringの中で指定した二つの点の間の内容だけ抽出
 * Array
-    * @2 配列の要素を全部ランダムに並び替える
-    * @4 二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
-    * @8 Objectの配列・Objectから特定のプロパティを抽出
-    * @9 配列の中のユニークな値を抽出
+    * @2    配列の要素を全部ランダムに並び替える
+    * @4    二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
+    * @8    Objectの配列・Objectから特定のプロパティを抽出
+    * @9    配列の中のユニークな値を抽出
+    * @10   配列からランダムな要素を抽出（個数指定可）
+    * @11   配列要素の和を求める（Stringの要素も可）
 * 生成関連
-    * @3 MongoDB用のObjectIdを生成する
-    * @5 ランダムなIDを生成する（長さ・フォマット指定できる）
+    * @3    MongoDB用のObjectIdを生成する
+    * @5    ランダムなIDを生成する（長さ・フォマット指定できる）
 * Object関連
-    * @8 Objectの配列・Objectから特定のプロパティを抽出
+    * @8    Objectの配列・Objectから特定のプロパティを抽出
 
 ## coreLib : ***import {cerceisLib} from '(path)'***
 
+* #11 &#x1F4D8;addAllArrayElement(arr) ***v.0.1.2***
+    * Sum all array element (Works on String element too)
+    * arr(Array)
+* #10 &#x1F4D8;getRandomFromArray(arr,noOfResult) ***v.0.1.1***
+    * Get random Element from result
+    * arr(Array)
+    * noOfResult(Number)
 * #9 &#x1F4D8;findUniqueInArray(inputArr) ***v.0.1.0***
     * Return array contains only unique field
     * inputArr(Array)
-
 * #8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.1.1***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
@@ -96,9 +106,10 @@ cerceisLib.invokeMagic()
             console.log( generateRandom("Format", 0, NN-SS:NNNN) )
             :=> "52-Dv:7895"
             ```
-* #4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2) ***v0.0.2***
+* #4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2, returnIndex) ***v0.1.3***
     * Remove duplicated elements and return array consist of only unique element
     * arr1(Array),arr2(Array)
+    * returnIndex(Boolean)
     * returns Array
 * #3 &#x1F4D8;generateMongoObjectId() ***v0.0.1***
     * Generate ObjectID from timestamp
@@ -116,8 +127,15 @@ cerceisLib.invokeMagic()
     * ちゃんと動いていることを確認する
 
 ## ChangeLog
+#### Version 0.1.3
+* 2020/05/27
+* removeDuplicatesFromArray() now can return removed element's index
+#### Version 0.1.2
+* 2020/05/27
+* Added addAllArrayElement
 #### Version 0.1.1
 * 2020/05/26
+* Added getRandomFromArray()
 * extractFieldFromObject() now supports multiple field extract
 #### Version 0.1.0
 * 2020/05/26

@@ -1,11 +1,13 @@
+"use strict";
+((exports)=>{
 //TypeCheck
-(function(exports){
 const isDefined = x => x !== undefined && x !== null;
 const isUndefined = x => x === undefined;
 const isArray = Array.isArray;
 const isString = x => (typeof x === 'string' || x instanceof String);
 const isObject = x => Object.prototype.toString.call(x) === "[object Object]";
 const isNumber = x => Object.prototype.toString.call(x) === "[object Number]";
+const isBoolean = x => Object.prototype.toString.call(x) === "[object Boolean]";
 
 exports.invokeMagic = function(){
     let t = "color:#66FFFF;font-weight:bold;"
@@ -125,14 +127,26 @@ exports.generateMongoObjectId = function(){
         return (Math.random() * 16 | 0).toString(16);
     }).toLowerCase();
 },
-exports.removeDuplicatesFromArray = function(arr1,arr2){
+exports.removeDuplicatesFromArray = function(arr1,arr2,returnIndex){
     if(
         isArray(arr1) &&
-        isArray(arr2)
+        isArray(arr2) &&
+        (isBoolean(returnIndex) || isUndefined(returnIndex) )
     ){
-        return Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
+        let extractedData = Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
+        if(isDefined(returnIndex)){
+            let indexData = []
+            if(returnIndex){
+                for(let i = 0 ; i<arr1.length ; i++)
+                    for(let j = 0 ; j<extractedData.length ; j++)
+                        if(arr1[i] === extractedData[j])
+                            indexData.push(i)
+                extractedData = {data:extractedData, indexData:indexData}
+            }
+        }
+        return extractedData
     }else{
-        console.log('%cType Error : removeDuplicatesFromArray(<Array>,<Array>)','color:#00FF66;')
+        console.log('%cType Error : removeDuplicatesFromArray(<Array>,<Array>,<Boolean><optional>)','color:#00FF66;')
     }
 },
 exports.generateRandom = function(type,length,format) {
@@ -254,5 +268,26 @@ exports.visualizeDOM = function(){
         }
     }
 }
-
+exports.getRandomFromArray = function(arr,noOfResult){
+    if(
+        isArray(arr) &&
+        (isNumber(noOfResult) || isUndefined(noOfResult) )
+    ){
+        let result = []
+        for(let i = 0 ; i<noOfResult ; i++)
+            result.push(arr[Math.floor(Math.random() * arr.length)]);
+        return result
+    }else{
+        console.log('%cType Error : getRandomFromArray(<Array>,<Number><optional>)','color:#00FF66;')
+    }
+},
+exports.addAllArrayElement = function(arr){ //Awaiting Documentation
+    if(
+        isArray(arr)
+    ){
+        return arr.reduce((f,l)=>{ return isNumber(f) ?  f + l :  f +" "+ l })
+    }else{
+        console.log('%cType Error : addAllArrayElement(<Array>)','color:#00FF66;')
+    }
+}
 })(typeof exports === 'undefined'? this['cerceisLib']={}: exports);
