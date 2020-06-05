@@ -1,11 +1,14 @@
 # Cerceis's Book Of Magic &#x1F4DA;
 ### The place you might find the spell you want.
 #### This library provides various functions that you might find it useful during development
+
+#I am reamking the documentation, some of docs below still works but not all
+
 # セルセイスの魔導書 &#x1F4DA;
 ### 欲しかった呪文が見つかるかもしれません。
 ## INSTALLATION
 ```
-npm install cerceislib --save
+npm install cerceislib@latest --save
 ```
 ## 使い方・How to use
 ### 普通のHTML・Normal HTML script tag:
@@ -33,7 +36,7 @@ cerceisLib.invokeMagic()
     * @7    Get substring between 2 characters or string, if multiple result is available, choosing is possible.
 * Array related
     * @2    Shuffle all element in an array
-    * @4    Remove duplicated elements and return array consist of only unique element
+    * @4    Remove duplicated elements and return array consist of only of the non-duplicated elements
     * @8    Extract specified property value from object or arrays of object
     * @9    Return array contains only unique field
     * @10   Get random Element from result (Can specify number of returns)
@@ -51,7 +54,7 @@ cerceisLib.invokeMagic()
     * @7    Stringの中で指定した二つの点の間の内容だけ抽出
 * Array
     * @2    配列の要素を全部ランダムに並び替える
-    * @4    二つの配列の要素をそれぞれ比べて、重複していない要素だけ見つける
+    * @4    二つの配列の要素をそれぞれ比べて、重複しなかった要素だけ見つける
     * @8    Objectの配列・Objectから特定のプロパティを抽出
     * @9    配列の中のユニークな値を抽出
     * @10   配列からランダムな要素を抽出（個数指定可）
@@ -62,29 +65,29 @@ cerceisLib.invokeMagic()
 * Object関連
     * @8    Objectの配列・Objectから特定のプロパティを抽出
 
-## coreLib : ***import {cerceisLib} from '(path)'***
+## cerceisLib :
 
-* #11 &#x1F4D8;addAllArrayElement(arr) ***v.0.1.2***
+* #11 &#x1F4D8;sumAllArrayElement(arr) ***v.0.1.2***
     * Sum all array element (Works on String element too)
     * arr(Array)
 * #10 &#x1F4D8;getRandomFromArray(arr,noOfResult) ***v.0.1.1***
     * Get random Element from result
     * arr(Array)
     * noOfResult(Number)
-* #9 &#x1F4D8;findUniqueInArray(inputArr) ***v.0.1.0***
+* #9 &#x1F4D8;returnNonDuplicated(inputArr) ***v.0.1.0***
     * Return array contains only unique field
     * inputArr(Array)
-* #8 &#x1F4D8;extractFieldFromObject(inputObjectOrArray,targetFieldName) ***v.0.1.1***
+* #8 &#x1F4D8;extractField(inputObjectOrArray,targetFieldName) ***v.0.1.1***
     * Extract specified property value from object or arrays of object
     * inputObjectOrArray(Object)/(Array)
     * targetFieldName(String)/(Arary)
-* #7 &#x1F4D8;getBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
+* #7 &#x1F4D8;getContentBetween2Char(inputString, strA, strB, indexOfResult) ***v.0.0.4***
     * Get substring between 2 characters or string, if multiple result is available, choosing is possible.
     * inputString(String)
     * strA(String)          : Starting char or string
     * strB(String)          : Ending char or string
     * indexOfResult(Number)*Optional' : Define which result to return (Start from 1)
-* #6 &#x1F4D8;checkAlphanumeric(inputText) ***v0.0.3***
+* #6 &#x1F4D8;checkIfAlphanumeric(inputText) ***v0.0.3***
     * Check String if its Alphanumeric (No symbols)
     * inputText(String)
     * returns Boolean
@@ -106,8 +109,8 @@ cerceisLib.invokeMagic()
             console.log( generateRandom("Format", 0, NN-SS:NNNN) )
             :=> "52-Dv:7895"
             ```
-* #4 &#x1F4D8;removeDuplicatesFromArray(arr1, arr2, returnIndex) ***v0.1.3***
-    * Remove duplicated elements and return array consist of only unique element
+* #4 &#x1F4D8;compareAndReturnNonDuplicated(arr1, arr2, returnIndex) ***v0.1.3***
+    * Remove duplicated elements and return array consist of only of the non-duplicated elements
     * arr1(Array),arr2(Array)
     * returnIndex(Boolean)
     * returns Array
@@ -129,28 +132,28 @@ cerceisLib.invokeMagic()
 ## ChangeLog
 #### Version 0.1.3
 * 2020/05/27
-* removeDuplicatesFromArray() now can return removed element's index
+* compareAndReturnNonDuplicated() now can return removed element's index
 #### Version 0.1.2
 * 2020/05/27
-* Added addAllArrayElement
+* Added sumAllArrayElement
 #### Version 0.1.1
 * 2020/05/26
 * Added getRandomFromArray()
-* extractFieldFromObject() now supports multiple field extract
+* extractField() now supports multiple field extract
 #### Version 0.1.0
 * 2020/05/26
-* Added findUniqueInArray()
+* Added returnNonDuplicated()
 * Rewrited all functions to have better strict type check and error handling
 #### Version 0.0.5
 * 2020/05/21
-* Added extractFieldFromObject()
+* Added extractField()
 #### Version 0.0.4
 * 2020/05/21
-* Added getBetween2Char()
+* Added getContentBetween2Char()
 #### Version 0.0.3
 * 2020/05/21
 * Added generateRandom()
-* Added checkAlphanumeric()
+* Added checkIfAlphanumeric()
 #### Version 0.0.2
 * 2020/05/21
 * Added namespace exports

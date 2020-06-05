@@ -1,6 +1,5 @@
 "use strict";
 ((exports)=>{
-//TypeCheck
 const isDefined = x => x !== undefined && x !== null;
 const isUndefined = x => x === undefined;
 const isArray = Array.isArray;
@@ -8,8 +7,7 @@ const isString = x => (typeof x === 'string' || x instanceof String);
 const isObject = x => Object.prototype.toString.call(x) === "[object Object]";
 const isNumber = x => Object.prototype.toString.call(x) === "[object Number]";
 const isBoolean = x => Object.prototype.toString.call(x) === "[object Boolean]";
-
-exports.invokeMagic = function(){
+exports.invokeMagic = ()=>{
     let t = "color:#66FFFF;font-weight:bold;"
     let r = "color:#FF0033;font-weight:bold;"
     let p = "color:#FF99CC;font-weight:bold;"
@@ -58,7 +56,140 @@ exports.invokeMagic = function(){
                               ,r,p,g,r,p,g,r,p,g
                               );
 }
-exports.extractFieldFromObject = function(inputObjectOrArray,targetFieldName){
+exports.isArrayElement = (x,type) =>{ //Awaiting Documentation
+    if(!exports.isAllArrayElementSameType(x))
+        return console.log('%cInput Error : Elements in array has multiple type','color:#FF0033;')
+    if(type === "String")
+        return isString(x[0])
+    if(type === "Number")
+        return isNumber(x[0])
+    if(type === "Array")
+        return isArray(x[0])
+    if(type === "Object")
+        return isObject(x[0])
+    if(type === "Boolean")
+        return isBoolean(x[0])
+}
+exports.stripHTML = (stringHtml)=>{
+    if(
+        isString(stringHtml)
+    ){
+        let temElement = document.createElement("div");
+        temElement.innerHTML = stringHtml
+        return temElement.textContent || temElement.innerText || "";
+    }else{
+        console.log('%cType Error : stripHTML(<String>)','color:#00FF66;')
+    }
+}
+exports.generateMongoObjectId = ()=>{
+    var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, ()=>{
+        return (Math.random() * 16 | 0).toString(16);
+    }).toLowerCase();
+}
+exports.addPrefix = (input,value,options)=>{//Awaiting Documentation
+    if(
+        (isString(input) || ((isArray(input)) && exports.isArrayElement(input,"String") )) &&
+        isString(value) &&
+        (isObject(options) || isUndefined(options) )
+    ){
+        let result = []
+        if(isString(input)){
+            
+            result = value + input
+        }else{
+            input.forEach((e,i) => {
+                result[i] = value + input[i]
+            });
+        }
+        if(isDefined(options)){
+            if(isNumber(options['fixTo'])){
+                if(isString(result)){
+                    if(options['fixTo']>=result.length){
+                        let difference = options['fixTo'] - result.length
+                        for(let i = 0 ; i<=difference-1; i++)
+                            result = value + result
+                        return result
+                    }
+                }else{
+                    result.forEach((e,i) => {
+                        if(options['fixTo']>=result[i].length){
+                            let difference = options['fixTo'] - result[i].length
+                            for(let j = 0 ; j<=difference-1; j++)
+                                result[i] = value + result[i]
+                            return result
+                        }
+                    });
+                }
+            }
+        }
+        return result
+    }else{
+        console.log('%cType Error : addPrefix(<String>/<ArraysOfstring>,<String>,<Object><optional>)','color:#00FF66;')
+    }
+}
+exports.addSuffix = (input,value,options)=>{ //Awaiting Documentation
+    if(
+        (isString(input) || ((isArray(input)) && exports.isArrayElement(input,"String") )) &&
+        isString(value) &&
+        (isObject(options) || isUndefined(options) )
+    ){
+        let result = []
+        if(isString(input)){
+            
+            result = input + value
+        }else{
+            input.forEach((e,i) => {
+                result[i] =  input[i] + value
+            });
+        }
+        if(isDefined(options)){
+            if(isNumber(options['fixTo'])){
+                if(isString(result)){
+                    if(options['fixTo']>=result.length){
+                        let difference = options['fixTo'] - result.length
+                        for(let i = 0 ; i<=difference-1; i++)
+                            result = result + value
+                        return result
+                    }
+                }else{
+                    result.forEach((e,i) => {
+                        if(options['fixTo']>=result[i].length){
+                            let difference = options['fixTo'] - result[i].length
+                            for(let j = 0 ; j<=difference-1; j++)
+                                result[i] = result[i] + value
+                            return result
+                        }
+                    });
+                }
+            }
+        }
+        return result
+    }else{
+        console.log('%cType Error : addPrefix(<String>/<ArraysOfstring>,<String>,<Object><optional>)','color:#00FF66;')
+    }
+}
+exports.shuffleArray = (array)=>{
+    if(
+        isArray(array)
+    ){
+        let currentIndex = array.length, temporaryValue, randomIndex;
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    }else{
+        console.log('%cType Error : shuffleArray(<Array>)','color:#00FF66;')
+    }
+}
+exports.extractField = (inputObjectOrArray,targetFieldName)=>{
     if(isString(targetFieldName)){
         if(isObject(inputObjectOrArray)){
             let result = {};
@@ -88,68 +219,121 @@ exports.extractFieldFromObject = function(inputObjectOrArray,targetFieldName){
             return result;
         }
     }else
-    console.log('%cType Error : extractFieldFromObject(<Array/Object>,<Array/String>)','color:#00FF66;')
+    console.log('%cType Error : extractField(<Array/Object>,<Array/String>)','color:#00FF66;')
 }
-exports.stripHTML = function(stringHtml){
+exports.o2a = (inputObj)=>{//Awaiting Documentation
     if(
-        isString(stringHtml)
+        isObject(inputObj) 
     ){
-        let temElement = document.createElement("div");
-        temElement.innerHTML = stringHtml
-        return temElement.textContent || temElement.innerText || "";
+        return Object.keys(inputObj).map((key)=>{ return [String(key), inputObj[key]] });
     }else{
-        console.log('%cType Error : stripHTML(<String>)','color:#00FF66;')
+        console.log('%cType Error : o2a(<Object>)','color:#00FF66;')
     }
-},
-exports.shuffleArray = function(array){
+}
+exports.a2o = (arr)=>{//Awaiting Documentation
     if(
-        isArray(array)
+        isArray(arr) 
     ){
-        let currentIndex = array.length, temporaryValue, randomIndex;
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+        let result = {}
+        for(let i = 0 ; i<arr.length ; i++){
+            result[arr[i][0]] = arr[i][1]
+            if(i === arr.length)
+                break
         }
-        return array;
+        return result
     }else{
-        console.log('%cType Error : shuffleArray(<Array>)','color:#00FF66;')
+        console.log('%cType Error : a2o(<Array>)','color:#00FF66;')
     }
-},
-exports.generateMongoObjectId = function(){
-    var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
-    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
-        return (Math.random() * 16 | 0).toString(16);
-    }).toLowerCase();
-},
-exports.removeDuplicatesFromArray = function(arr1,arr2,returnIndex){
+}
+/*Removed because returnNonDuplicated(arr1.concat(arr2)) return the same result
+exports.compareAndReturnNonDuplicated() Depreceated*/
+exports.returnNonDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
     if(
-        isArray(arr1) &&
-        isArray(arr2) &&
-        (isBoolean(returnIndex) || isUndefined(returnIndex) )
+        (isNumber(order) || isUndefined(order)) &&
+        isArray(inputArr)
     ){
-        let extractedData = Array.from(new Set(arr1.concat(arr2).filter(e => ! (arr2.includes(e) && arr1.includes(e)))));
-        if(isDefined(returnIndex)){
-            let indexData = []
-            if(returnIndex){
-                for(let i = 0 ; i<arr1.length ; i++)
-                    for(let j = 0 ; j<extractedData.length ; j++)
-                        if(arr1[i] === extractedData[j])
-                            indexData.push(i)
-                extractedData = {data:extractedData, indexData:indexData}
+        if(
+            exports.isAllArrayElementSameType(inputArr)&&
+            isObject(inputArr[0])&&
+            exports.isObjectLenSame(inputArr)
+        ){
+            let storedProperty, tmp;
+            if(order === -1)
+                storedProperty = Object.keys(inputArr[0]).sort((a,b)=> b-a), tmp = exports.sortObject(inputArr,-1)
+            else
+                storedProperty = Object.keys(inputArr[0]).sort(), tmp = exports.sortObject(inputArr)
+            let y = tmp.map(x => exports.o2a(x))
+            y = y.flat(Infinity)
+            for(let i = 0 ; i<storedProperty.length ; i++)
+                y = exports.removeElementContain(y,storedProperty[i],true)
+            y = exports.returnNonDuplicated(y)
+            let setLen = y.length/(storedProperty.length), breakCounter = 0, result = []
+            for(let i = 0 ; i<y.length ; i++){
+                let Obj = {} , counter = i * storedProperty.length
+                for(let j = 0 ; j<storedProperty.length ; j++){
+                    Obj[storedProperty[j]] = y[counter]
+                    counter ++
+                }
+                result.push(Obj)
+                breakCounter ++
+                if(breakCounter === setLen) break;
             }
+            return result
+        }else{
+            function countInArray(array, value) { // extract this function
+                return array.reduce((a,b) => a + (b === value), 0);
+            }
+            let extractedData = Array.from(new Set(inputArr.filter(e => countInArray(inputArr,e) !== 1 ? false : true )));
+            return extractedData
         }
-        return extractedData
     }else{
-        console.log('%cType Error : removeDuplicatesFromArray(<Array>,<Array>,<Boolean><optional>)','color:#00FF66;')
+        console.log('%cType Error : returnNonDuplicated(<Array>,<Number><optional>)','color:#00FF66;')
     }
-},
-exports.generateRandom = function(type,length,format) {
+}
+exports.returnUniques = (input,order)=>{//Need fix
+    if(
+        (isNumber(order) || isUndefined(order)) &&
+        isArray(input)
+    ){
+        if(
+            exports.isAllArrayElementSameType(input)&&
+            isObject(input[0])&&
+            exports.isObjectLenSame(input)
+        ){
+            let storedProperty, tmp;
+            ///Check all object has same length
+            //Sort Object key if defined
+            if(order === -1)
+                storedProperty = Object.keys(input[0]).sort((a,b)=> b-a), tmp = exports.sortObject(input,-1)
+            else
+                storedProperty = Object.keys(input[0]).sort(), tmp = exports.sortObject(input)
+            //Convert Object into Array
+            let y = tmp.map(x => exports.o2a(x))
+            //Sort object field before start flattening it
+            y = y.flat(Infinity)
+            for(let i = 0 ; i<storedProperty.length ; i++)
+                y = exports.removeElementContain(y,storedProperty[i],true)
+            y = exports.returnUniques(y)
+            //Reconstruct array back to object
+            let setLen = y.length/(storedProperty.length), breakCounter = 0, result = []
+            for(let i = 0 ; i<y.length ; i++){
+                let Obj = {} , counter = i * storedProperty.length
+                for(let j = 0 ; j<storedProperty.length ; j++){
+                    Obj[storedProperty[j]] = y[counter]
+                    counter ++
+                }
+                result.push(Obj)
+                breakCounter ++
+                if(breakCounter === setLen) break;
+            }
+            return result
+        }else
+            return Array.from(new Set(input))
+    }else{
+        console.log('%cType Error : returnUniques(<Array>,<Number><optional)','color:#00FF66;')
+    }
+}
+exports.generateRandom = (type,length,format)=>{
     if(
        isString(type) &&
        isNumber(length) &&
@@ -187,7 +371,7 @@ exports.generateRandom = function(type,length,format) {
                     let NumChars = '0123456789';
                     let NumCharsLen = NumChars.length;
                     for(let i = 0 ;i<format.length; i++){
-                        if(!this.checkAlphanumeric(format[i])){
+                        if(!exports.checkIfAlphanumeric(format[i])){
                             result += format[i];
                         }else if(format[i]==="N"){
                             result += NumChars.charAt(Math.floor(Math.random() * NumCharsLen));
@@ -206,8 +390,8 @@ exports.generateRandom = function(type,length,format) {
     }else{
         console.log("%cType Error : generateRandom(<String>,<Number>,<String>)","color:#00FF66;")
     }
-},
-exports.checkAlphanumeric = function(inputText){
+}
+exports.checkIfAlphanumeric = (inputText)=>{
     if(isString(inputText)){
         let alphanumeric = /^[0-9a-zA-Z]+$/;
         if(inputText.match(alphanumeric)){
@@ -216,10 +400,10 @@ exports.checkAlphanumeric = function(inputText){
             return false; 
         }
     }else{
-        console.log("%cType Error : checkAlphanumeric(<String>)","color:#00FF66;")
+        console.log("%cType Error : checkIfAlphanumeric(<String>)","color:#00FF66;")
     }
-},
-exports.getBetween2Char = function(inputString,strA,strB,indexOfResult){
+}
+exports.getContentBetween2Char = (inputString,strA,strB,indexOfResult)=>{
     if(
        isString(inputString) &&
        isString(strA) &&
@@ -231,26 +415,10 @@ exports.getBetween2Char = function(inputString,strA,strB,indexOfResult){
         if(!splitString) return "Please enter integer <= "+ ((inputString.split(strA).length)-1)
         return splitString.substring(0,splitString.indexOf(strB))
     }else{
-        console.log('%cType Error : getBetween2Char(<String>,<String>,<String>,<Number>)','color:#00FF66;')
+        console.log('%cType Error : getContentBetween2Char(<String>,<String>,<String>,<Number>)','color:#00FF66;')
     }
-},
-exports.findUniqueInArray = function(inputArr){
-    if(
-       isArray(inputArr)
-    ){
-        let uniqueArr = []
-        for(let i in inputArr){
-            if(uniqueArr.includes(inputArr[i])){
-                uniqueArr.splice(uniqueArr.indexOf(inputArr[i]),1)
-            }else
-                uniqueArr.push(inputArr[i])
-        }
-        return uniqueArr;
-    }else{
-        console.log('%cType Error : findUniqueInArray(<Array>)','color:#00FF66;')
-    }
-},
-exports.visualizeDOM = function(){
+}
+exports.visualizeDOM = ()=>{
     const div = document.getElementsByTagName("div")
     for(let i = 0 ; i<div.length ; i++){
         div[i].style.background = "#D6EAF8"
@@ -268,7 +436,7 @@ exports.visualizeDOM = function(){
         }
     }
 }
-exports.getRandomFromArray = function(arr,noOfResult){
+exports.getRandomFromArray = (arr,noOfResult)=>{
     if(
         isArray(arr) &&
         (isNumber(noOfResult) || isUndefined(noOfResult) )
@@ -280,14 +448,191 @@ exports.getRandomFromArray = function(arr,noOfResult){
     }else{
         console.log('%cType Error : getRandomFromArray(<Array>,<Number><optional>)','color:#00FF66;')
     }
-},
-exports.addAllArrayElement = function(arr){ //Awaiting Documentation
+}
+exports.sumAllArrayElement = (arr)=>{
     if(
         isArray(arr)
     ){
         return arr.reduce((f,l)=>{ return isNumber(f) ?  f + l :  f +" "+ l })
     }else{
-        console.log('%cType Error : addAllArrayElement(<Array>)','color:#00FF66;')
+        console.log('%cType Error : sumAllArrayElement(<Array>)','color:#00FF66;')
     }
 }
+exports.getEvenOddArrayElement = (arr, evenOrOdd)=>{ //Awaiting Documentation
+    if(
+        isArray(arr) &&
+        isNumber(evenOrOdd)
+    ){
+        if(evenOrOdd === 1)
+            return arr.filter((v,i)=>{ return (i%2);}); 
+        if(evenOrOdd === 2){
+            return arr.filter((v,i)=>{ return !(i%2);}); 
+        }
+    }else{
+        console.log('%cType Error : getEvenOddArrayElement(<Array>,<Number>)','color:#00FF66;')
+    }
+}
+exports.isAllArrayElementSameType = (arr)=>{//Awaiting Documentation
+    if(
+        isArray(arr) 
+    ){
+        return new Set( arr.map( x => Object.prototype.toString.call(x) ) ).size <= 1;
+    }else{
+        console.log('%cType Error : isAllArrayElementSameType(<Array>)','color:#00FF66;')
+    }
+}
+exports.removeElementContain = (arr,value,forceMode)=>{//Awaiting Documentation
+    if(
+        isArray(arr) &&
+        isDefined(value) &&
+        (exports.isAllArrayElementSameType(arr) ||
+        isDefined(forceMode))
+    ){
+        if(isObject(arr[0])){
+            if(isObject(value)){               
+                return (arr.filter((v)=>{ return(!( v[Object.getOwnPropertyNames(value)[0]] == value[Object.getOwnPropertyNames(value)[0]])) }))
+            }else{
+                return console.log('%cType Error : <value> needs to be object {propertyName:value}','color:#00FF66;')
+            }
+        }
+        if(!isObject(arr[0] && !isObject(value)))
+            return arr.filter((v,i)=>{ return !(v === value);}); 
+    }else{
+        console.log('%cType Error : removeElementContain(<Array>,<Any>,<Boolean><optional>) %c*All array element must have same type','color:#00FF66;','color:#FF0033;')
+    }
+}
+exports.isObjectLenSame = (input)=>{//Awaiting Documentation
+    if(
+        isArray(input) &&
+        exports.isArrayElement(input,"Object")
+    ){
+        let alpha = Object.keys(input[0]).length
+        let result = false
+        for(let i = 0 ; i<input.length ; i++ ){
+            if((Object.keys(input[i]).length) !== alpha)
+                result = false
+            else
+                result =  true
+        }
+        return result
+    }else{
+        console.log('%cType Error : isObjectLenSame(<Array>)','color:#00FF66;')
+    }
+}
+exports.sortObject = (input,order)=>{//Awaiting Documentation
+    if(
+        (isNumber(order) || isUndefined(order)) &&
+        isObject(input) || 
+        (isArray(input) && exports.isArrayElement(input,"Object"))
+        
+    ){
+        if(isObject(input)){
+                let orderedObj = {}
+                if(order === -1)
+                    Object.keys(input).sort((a,b)=> b-a).forEach((key)=> (orderedObj[key] = input[key]) );
+                else
+                    Object.keys(input).sort().forEach((key)=> (orderedObj[key] = input[key]) );
+                return orderedObj
+        }else{
+            if(order === -1)
+                return input.map(x => {
+                    let orderedObj = {}
+                    Object.keys(input[0]).sort((a,b)=> b-a).forEach((key)=>orderedObj[key] = x[key]);
+                    return orderedObj
+                })
+            else
+                return input.map(x => {
+                    let orderedObj = {}
+                    Object.keys(input[0]).sort().forEach((key)=>orderedObj[key] = x[key]);
+                    return orderedObj
+                })
+        }
+    }else{
+        console.log('%cType Error : sortObject(<Object>/<ArrayOfObject>,<Number><optional>)','color:#00FF66;')
+    }
+}
+exports.generateArray = (eleType,len)=>{//Awaiting Documentation
+    if(
+        isString(eleType) &&
+        isNumber(len) 
+    ){
+        let result = []
+        let randomNumber = 0
+        let randomString = ""
+        let tmpObj = {}
+        switch(eleType){
+            case "Array":
+                for(let i = 0 ; i<len ; i++){
+                    randomNumber = Math.floor(Math.random() * 1000)
+                    result.push([randomNumber])
+                }  
+                return result
+            case "Object":
+                for(let i = 0 ; i<len ; i++){
+                    for(let j = 0 ; j<2 ; j++){
+                        randomNumber = Math.floor(Math.random() * 1000)
+                        randomString = exports.generateRandom("String",Math.floor(Math.random() * 5)+1)
+                        tmpObj[randomString] = randomNumber
+                    }
+                    result.push(tmpObj)
+                    tmpObj = {} 
+                }  
+                return result
+            case "String":
+                for(let i = 0 ; i<len ; i++){
+                    randomString = exports.generateRandom("String",Math.floor(Math.random() *6)+3)
+                    result.push(randomString)
+                }  
+                return result
+            case "Number":
+                for(let i = 0 ; i<len ; i++){
+                    randomNumber = Math.floor(Math.random() * 10000)
+                    result.push(randomNumber)
+                }  
+                return result
+            case "Boolean":
+                let choice = [true,false]
+                for(let i = 0 ; i<len ; i++){
+                    randomNumber = Math.floor(Math.random() * 2)
+                    result.push(choice[randomNumber])
+                }  
+                return result
+            default:
+                console.log("Error")
+        }
+
+    }else{
+        console.log('%cType Error : generateArray(<String>,<Number>)','color:#00FF66;')
+    }
+}
+exports.isObjectSame = (obj1,obj2)=>{//Awaiting Documentation
+    if(
+        isObject(obj1) &&
+        isObject(obj2) 
+    ){
+        let a = exports.o2a(obj1).flat().sort()
+        let b = exports.o2a(obj2).flat().sort()
+        let trigger = false
+        if(a.length !== b.length) //Check len, if different, no point to move foward
+            return false
+        for(let i = 0 ; i<a.length ; i++){
+            if(a[i] !== b[i]){
+                trigger = true
+                break
+            }
+        }
+        if(trigger === true) return false
+        else return true
+    }else{
+        console.log('%cType Error : isObjectSame(<Object>,<Object>)','color:#00FF66;')
+    }
+}
+// [rearrangeObjectProperty]
+/*function countInArray(array, value) { // extract this function
+return array.reduce((a,b) => a + (b === value), 0);
+} 
+*/
 })(typeof exports === 'undefined'? this['cerceisLib']={}: exports);
+
+
+
