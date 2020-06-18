@@ -234,19 +234,17 @@ exports.a2o = (arr)=>{//Awaiting Documentation
     if(
         isArray(arr) 
     ){
-        let result = {}
-        for(let i = 0 ; i<arr.length ; i++){
-            result[arr[i][0]] = arr[i][1]
-            if(i === arr.length)
-                break
-        }
+        let result = []
+        arr.forEach(e=>{
+            let tmpObj = {}
+            e.forEach(e2 => tmpObj[e2[0]] = e2[1] )
+            result.push(tmpObj)
+        })
         return result
     }else{
         console.log('%cType Error : a2o(<Array>)','color:#00FF66;')
     }
 }
-/*Removed because returnNonDuplicated(arr1.concat(arr2)) return the same result
-exports.compareAndReturnNonDuplicated() Depreceated*/
 exports.returnNonDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
     if(
         (isNumber(order) || isUndefined(order)) &&
@@ -280,17 +278,14 @@ exports.returnNonDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
             }
             return result
         }else{
-            function countInArray(array, value) { // extract this function
-                return array.reduce((a,b) => a + (b === value), 0);
-            }
-            let extractedData = Array.from(new Set(inputArr.filter(e => countInArray(inputArr,e) !== 1 ? false : true )));
+            let extractedData = Array.from(new Set(inputArr.filter(e => exports.countInArray(inputArr,e) !== 1 ? false : true )));
             return extractedData
         }
     }else{
         console.log('%cType Error : returnNonDuplicated(<Array>,<Number><optional>)','color:#00FF66;')
     }
 }
-exports.returnUniques = (input,order)=>{//Need fix
+exports.returnUniques = (input,order)=>{//Awaiting Documentation
     if(
         (isNumber(order) || isUndefined(order)) &&
         isArray(input)
@@ -300,32 +295,57 @@ exports.returnUniques = (input,order)=>{//Need fix
             isObject(input[0])&&
             exports.isObjectLenSame(input)
         ){
-            let storedProperty, tmp;
+            let storedProperty, tmp, eachObjectLen;
+            let storedPropertyType = []
             ///Check all object has same length
             //Sort Object key if defined
-            if(order === -1)
-                storedProperty = Object.keys(input[0]).sort((a,b)=> b-a), tmp = exports.sortObject(input,-1)
-            else
-                storedProperty = Object.keys(input[0]).sort(), tmp = exports.sortObject(input)
+            if(order === -1){
+                storedProperty = Object.keys(input[0]).sort().reverse()
+                tmp = exports.sortObject(input,-1)
+            }else{
+                storedProperty = Object.keys(input[0]).sort()
+                tmp = exports.sortObject(input)
+            }
+            storedProperty.forEach(e => {
+                storedPropertyType.push([e, typeof input[0][e]])
+            });
+            eachObjectLen = storedProperty.length
             //Convert Object into Array
             let y = tmp.map(x => exports.o2a(x))
             //Sort object field before start flattening it
             y = y.flat(Infinity)
             for(let i = 0 ; i<storedProperty.length ; i++)
                 y = exports.removeElementContain(y,storedProperty[i],true)
+            //Form array pairs
+            y = y.reduce((result, value, index,array)=>{
+                let tmp;
+                if (index % eachObjectLen === 0){
+                    tmp = array.slice(index, index + eachObjectLen)
+                    result.push(exports.sumAllArrayElement(tmp))
+                }
+                return result;
+            }, []);
+            //Filtering starts here
             y = exports.returnUniques(y)
             //Reconstruct array back to object
-            let setLen = y.length/(storedProperty.length), breakCounter = 0, result = []
-            for(let i = 0 ; i<y.length ; i++){
-                let Obj = {} , counter = i * storedProperty.length
-                for(let j = 0 ; j<storedProperty.length ; j++){
-                    Obj[storedProperty[j]] = y[counter]
-                    counter ++
-                }
-                result.push(Obj)
-                breakCounter ++
-                if(breakCounter === setLen) break;
-            }
+            let result = []
+            y.forEach(e=>{
+                let tmpResult = {}
+                let tmp = e.split(" ")
+                storedPropertyType.forEach((e,i) => {
+                    switch(e[1]){
+                        case "number":
+                            tmpResult[e[0]] =  Number(tmp[i])
+                            break
+                        case "string":
+                            tmpResult[e[0]] =  String(tmp[i])
+                            break
+                        default:
+                            tmpResult[e[0]] =  tmp[i] 
+                    }
+                })
+                result.push(tmpResult)
+            })
             return result
         }else
             return Array.from(new Set(input))
@@ -453,12 +473,18 @@ exports.sumAllArrayElement = (arr)=>{
     if(
         isArray(arr)
     ){
-        return arr.reduce((f,l)=>{ return isNumber(f) ?  f + l :  f +" "+ l })
+        return arr.reduce((f,l)=>{
+            if(exports.isAllArrayElementSameType(arr) && isNumber(f) ){
+                return f + l 
+            }else{
+                return f +" "+ l 
+            }
+        })
     }else{
         console.log('%cType Error : sumAllArrayElement(<Array>)','color:#00FF66;')
     }
 }
-exports.getEvenOddArrayElement = (arr, evenOrOdd)=>{ //Awaiting Documentation
+exports.getOddEvenArrayElement = (arr, evenOrOdd)=>{ //Awaiting Documentation
     if(
         isArray(arr) &&
         isNumber(evenOrOdd)
@@ -526,26 +552,35 @@ exports.sortObject = (input,order)=>{//Awaiting Documentation
         (isArray(input) && exports.isArrayElement(input,"Object"))
         
     ){
-        if(isObject(input)){
+        if(isObject(input)){ //If single obj
                 let orderedObj = {}
-                if(order === -1)
-                    Object.keys(input).sort((a,b)=> b-a).forEach((key)=> (orderedObj[key] = input[key]) );
-                else
+                if(order === -1){
+                console.log("here1.1") 
+                    Object.keys(input).sort().reverse().forEach((key)=> (orderedObj[key] = input[key]) );
+                }
+                else{
+                console.log("here1.2")
                     Object.keys(input).sort().forEach((key)=> (orderedObj[key] = input[key]) );
+                }
                 return orderedObj
-        }else{
-            if(order === -1)
+               
+        }else{  //If array of obj
+            if(order === -1){
+            console.log("here2")
                 return input.map(x => {
                     let orderedObj = {}
-                    Object.keys(input[0]).sort((a,b)=> b-a).forEach((key)=>orderedObj[key] = x[key]);
+                    Object.keys(input[0]).sort().reverse().forEach((key)=>orderedObj[key] = x[key]);
                     return orderedObj
                 })
-            else
+            }
+            else{
+                console.log("here3")
                 return input.map(x => {
                     let orderedObj = {}
                     Object.keys(input[0]).sort().forEach((key)=>orderedObj[key] = x[key]);
                     return orderedObj
                 })
+            }
         }
     }else{
         console.log('%cType Error : sortObject(<Object>/<ArrayOfObject>,<Number><optional>)','color:#00FF66;')
@@ -568,11 +603,12 @@ exports.generateArray = (eleType,len)=>{//Awaiting Documentation
                 }  
                 return result
             case "Object":
+                let propertyName1 = exports.generateRandom("String",Math.floor(Math.random() * 5)+1)
+                let propertyName2 = exports.generateRandom("String",Math.floor(Math.random() * 5)+1)
                 for(let i = 0 ; i<len ; i++){
                     for(let j = 0 ; j<2 ; j++){
-                        randomNumber = Math.floor(Math.random() * 1000)
-                        randomString = exports.generateRandom("String",Math.floor(Math.random() * 5)+1)
-                        tmpObj[randomString] = randomNumber
+                        tmpObj[propertyName1] = Math.floor(Math.random() * 1000)
+                        tmpObj[propertyName2] = Math.floor(Math.random() * 1000)
                     }
                     result.push(tmpObj)
                     tmpObj = {} 
@@ -627,11 +663,57 @@ exports.isObjectSame = (obj1,obj2)=>{//Awaiting Documentation
         console.log('%cType Error : isObjectSame(<Object>,<Object>)','color:#00FF66;')
     }
 }
+exports.simpleEncode = (data,key)=>{//Awaiting Documentation
+    if(
+        isString(data) &&
+        isString(key) 
+    ){
+        let keyValue = 0
+        let result = ""
+        for(let i = 0 ; i<key.length ; i++){  
+            keyValue += key.charCodeAt(i)
+        }
+        keyValue = String(keyValue).split("").reverse().join("")
+        keyValue = "l"+keyValue+"l"
+        for(let i = 0 ; i<data.length ; i++){  
+            result += data.charCodeAt(i)+keyValue
+        }
+        return result
+    }else{
+        console.log('%cType Error : encode(<String>,<String>)','color:#00FF66;')
+    }
+}
+exports.simpleDecode = (data,key)=>{//Awaiting Documentation
+        if(
+            isString(data) &&
+            isString(key) 
+        ){
+            let keyValue = 0
+            for(let i = 0 ; i<key.length ; i++){  
+                keyValue += key.charCodeAt(i)
+            }
+            keyValue = String(keyValue).split("").reverse().join("")
+            keyValue = "l"+keyValue+"l"
+            let unlockedData = data.split(keyValue)
+            let filtered = unlockedData.filter((el)=> (el !== null) && (el !== "") && (el !== undefined) );
+            let result = ""
+            filtered.forEach(e => result += String.fromCharCode(Number(e)) )
+            return result
+        }else{
+            console.log('%cType Error : decode(<String>,<String>)','color:#00FF66;')
+        }
+}
+exports.countInArray = (array,value)=>{//Awaiting Documentation
+    if(
+        isArray(array) &&
+        isDefined(value) 
+    ){
+        return array.reduce((a,b) => a + (b === value), 0);
+    }else{
+        console.log('%cType Error : countInArray(<Array>,<value>)','color:#00FF66;')
+    }
+}
 // [rearrangeObjectProperty]
-/*function countInArray(array, value) { // extract this function
-return array.reduce((a,b) => a + (b === value), 0);
-} 
-*/
 })(typeof exports === 'undefined'? this['cerceisLib']={}: exports);
 
 
