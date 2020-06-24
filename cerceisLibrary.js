@@ -255,27 +255,57 @@ exports.returnNonDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
             isObject(inputArr[0])&&
             exports.isObjectLenSame(inputArr)
         ){
-            let storedProperty, tmp;
-            if(order === -1)
-                storedProperty = Object.keys(inputArr[0]).sort((a,b)=> b-a), tmp = exports.sortObject(inputArr,-1)
-            else
-                storedProperty = Object.keys(inputArr[0]).sort(), tmp = exports.sortObject(inputArr)
+            let storedProperty, tmp, eachObjectLen;
+            let storedPropertyType = []
+            ///Check all object has same length
+            //Sort Object key if defined
+            if(order === -1){
+                storedProperty = Object.keys(inputArr[0]).sort().reverse()
+                tmp = exports.sortObject(inputArr,-1)
+            }else{
+                storedProperty = Object.keys(inputArr[0]).sort()
+                tmp = exports.sortObject(inputArr)
+            }
+            storedProperty.forEach(e => {
+                storedPropertyType.push([e, typeof inputArr[0][e]])
+            });
+            eachObjectLen = storedProperty.length
+            //Convert Object into Array
             let y = tmp.map(x => exports.o2a(x))
+            //Sort object field before start flattening it
             y = y.flat(Infinity)
             for(let i = 0 ; i<storedProperty.length ; i++)
                 y = exports.removeElementContain(y,storedProperty[i],true)
-            y = exports.returnNonDuplicated(y)
-            let setLen = y.length/(storedProperty.length), breakCounter = 0, result = []
-            for(let i = 0 ; i<y.length ; i++){
-                let Obj = {} , counter = i * storedProperty.length
-                for(let j = 0 ; j<storedProperty.length ; j++){
-                    Obj[storedProperty[j]] = y[counter]
-                    counter ++
+            //Form array pairs
+            y = y.reduce((result, value, index,array)=>{
+                let tmp;
+                if (index % eachObjectLen === 0){
+                    tmp = array.slice(index, index + eachObjectLen)
+                    result.push(exports.sumAllArrayElement(tmp))
                 }
-                result.push(Obj)
-                breakCounter ++
-                if(breakCounter === setLen) break;
-            }
+                return result;
+            }, []);
+            //Filtering starts here
+            y = exports.returnNonDuplicated(y)
+            //Reconstruct array back to object
+            let result = []
+            y.forEach(e=>{
+                let tmpResult = {}
+                let tmp = e.split(" ")
+                storedPropertyType.forEach((e,i) => {
+                    switch(e[1]){
+                        case "number":
+                            tmpResult[e[0]] =  Number(tmp[i])
+                            break
+                        case "string":
+                            tmpResult[e[0]] =  String(tmp[i])
+                            break
+                        default:
+                            tmpResult[e[0]] =  tmp[i] 
+                    }
+                })
+                result.push(tmpResult)
+            })
             return result
         }else{
             let extractedData = Array.from(new Set(inputArr.filter(e => exports.countInArray(inputArr,e) !== 1 ? false : true )));
@@ -555,18 +585,15 @@ exports.sortObject = (input,order)=>{//Awaiting Documentation
         if(isObject(input)){ //If single obj
                 let orderedObj = {}
                 if(order === -1){
-                console.log("here1.1") 
                     Object.keys(input).sort().reverse().forEach((key)=> (orderedObj[key] = input[key]) );
                 }
                 else{
-                console.log("here1.2")
                     Object.keys(input).sort().forEach((key)=> (orderedObj[key] = input[key]) );
                 }
                 return orderedObj
                
         }else{  //If array of obj
             if(order === -1){
-            console.log("here2")
                 return input.map(x => {
                     let orderedObj = {}
                     Object.keys(input[0]).sort().reverse().forEach((key)=>orderedObj[key] = x[key]);
@@ -574,7 +601,6 @@ exports.sortObject = (input,order)=>{//Awaiting Documentation
                 })
             }
             else{
-                console.log("here3")
                 return input.map(x => {
                     let orderedObj = {}
                     Object.keys(input[0]).sort().forEach((key)=>orderedObj[key] = x[key]);
