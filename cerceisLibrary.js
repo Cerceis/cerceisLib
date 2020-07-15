@@ -7,6 +7,7 @@ const isString = x => (typeof x === 'string' || x instanceof String);
 const isObject = x => Object.prototype.toString.call(x) === "[object Object]";
 const isNumber = x => Object.prototype.toString.call(x) === "[object Number]";
 const isBoolean = x => Object.prototype.toString.call(x) === "[object Boolean]";
+
 exports.invokeMagic = ()=>{
     let t = "color:#66FFFF;font-weight:bold;"
     let r = "color:#FF0033;font-weight:bold;"
@@ -245,8 +246,89 @@ exports.a2o = (arr)=>{//Awaiting Documentation
         console.log('%cType Error : a2o(<Array>)','color:#00FF66;')
     }
 }
-//Add one more for returnDuplicated << Single array input
-// Also one more for compareAndFindDuplicated << 2 array input
+exports.returnDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
+    if(
+        (isNumber(order) || isUndefined(order)) &&
+        isArray(inputArr)
+    ){
+        if(
+            exports.isAllArrayElementSameType(inputArr)&&
+            isObject(inputArr[0])&&
+            exports.isObjectLenSame(inputArr)
+        ){
+            let storedProperty, tmp, eachObjectLen;
+            let storedPropertyType = []
+            ///Check all object has same length
+            //Sort Object key if defined
+            if(order === -1){
+                storedProperty = Object.keys(inputArr[0]).sort().reverse()
+                tmp = exports.sortObject(inputArr,-1)
+            }else{
+                storedProperty = Object.keys(inputArr[0]).sort()
+                tmp = exports.sortObject(inputArr)
+            }
+            storedProperty.forEach(e => {
+                storedPropertyType.push([e, typeof inputArr[0][e]])
+            });
+            eachObjectLen = storedProperty.length
+            //Convert Object into Array
+            let y = tmp.map(x => exports.o2a(x))
+            //Sort object field before start flattening it
+            y = y.flat(Infinity)
+            for(let i = 0 ; i<storedProperty.length ; i++)
+                y = exports.removeElementContain(y,storedProperty[i],true)
+            //Form array pairs
+            y = y.reduce((result, value, index,array)=>{
+                let tmp;
+                if (index % eachObjectLen === 0){
+                    tmp = array.slice(index, index + eachObjectLen)
+                    result.push(exports.sumAllArrayElement(tmp))
+                }
+                return result;
+            }, []);
+            //Filtering starts here
+            y = exports.returnDuplicated(y)
+            
+            //Reconstruct array back to object
+            let result = []
+            y.forEach(e=>{
+                let tmpResult = {}
+                let tmp = e.split(" ")
+                storedPropertyType.forEach((e,i) => {
+                    switch(e[1]){
+                        case "number":
+                            tmpResult[e[0]] =  Number(tmp[i])
+                            break
+                        case "string":
+                            tmpResult[e[0]] =  String(tmp[i])
+                            break
+                        default:
+                            tmpResult[e[0]] =  tmp[i] 
+                    }
+                })
+                result.push(tmpResult)
+            })
+            return result
+        }else{
+            let backupArr = inputArr.slice()
+            let len = inputArr.length
+            let extractedData = []
+            for(let i = 0 ; i<len ; i++){
+                backupArr.shift()
+                let filterElement = inputArr[i]
+                for(let j = 0 ; j<backupArr.length ; j++)
+                    if(backupArr[j] === filterElement){
+                        extractedData.push(backupArr[j])
+                        break
+                    } 
+            }
+            extractedData = Array.from(new Set(extractedData))
+            return extractedData
+        }
+    }else{
+        console.log('%cType Error : returnDuplicated(<Array>,<Number><optional>)','color:#00FF66;')
+    }
+}
 exports.returnNonDuplicated = (inputArr,order)=>{ //Awaiting upgrade document
     if(
         (isNumber(order) || isUndefined(order)) &&
@@ -741,6 +823,44 @@ exports.countInArray = (array,value)=>{//Awaiting Documentation
         console.log('%cType Error : countInArray(<Array>,<value>)','color:#00FF66;')
     }
 }
+
+exports.resizeImage=(e,height,width)=>{
+    console.log(e.files[0])
+    const fileName = e.files[0].name;
+    const reader = new FileReader();
+    reader.readAsDataURL(e.files[0]);
+    reader.onload = event => {
+        console.log(event)
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+                const elem = document.createElement('canvas');
+                elem.width = width;
+                elem.height = height;
+                const ctx = elem.getContext('2d');
+                // img.width and img.height will contain the original dimensions
+                ctx.drawImage(img, 0, 0, width, height);
+                ctx.canvas.toBlob((blob) => {
+                    const file = new File([blob], fileName, {
+                        type: 'image/png',
+                        lastModified: Date.now()
+                    });
+                    //file = result
+                    //return file
+                    //From here
+                    console.log(file)
+                    const reader2 = new FileReader();
+                    reader2.onload = (e2) => {
+                        document.getElementById('preview').setAttribute('src',e2.target.result)
+                      }
+                    reader2.readAsDataURL(file);    
+                    // until here is for testing preview
+                }, 'image/png', 1);
+            },
+        reader.onerror = error => console.log(error);
+    };
+}
+
 // [rearrangeObjectProperty]
 })(typeof exports === 'undefined'? this['cerceisLib']={}: exports);
 
